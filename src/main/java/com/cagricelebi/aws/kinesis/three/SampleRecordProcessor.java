@@ -57,19 +57,9 @@ public class SampleRecordProcessor implements IRecordProcessor {
     @Override
     public void shutdown(ShutdownInput shutdownInput) {
         try {
-            logger.warn("(shutdown) shutdown: " + shardId);
-            logger.warn("(shutdown) reason: " + shutdownInput.getShutdownReason());
+            logger.warn("(shutdown) {} is shutting down with reason: {}.", shardId, shutdownInput.getShutdownReason());
             logger.warn("(shutdown) checkpoint writing...");
-            try {
-                shutdownInput.getCheckpointer().checkpoint();
-            } catch (ShutdownException e) {
-                String msg = e.getMessage();
-                if (msg.contains("Can't update checkpoint - instance doesn't hold the lease for this shard")) {
-                    logger.warn(msg);
-                } else {
-                    logger.error(e.getMessage(), e);
-                }
-            }
+            shutdownInput.getCheckpointer().checkpoint();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
