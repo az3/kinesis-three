@@ -92,6 +92,7 @@ public class Starter {
         try {
             config.withRegionName(properties.getProperty("regionName"));
             config.withKinesisEndpoint(properties.getProperty("kinesisEndpoint"));
+            config.withIdleTimeBetweenReadsInMillis(Long.parseLong(properties.getProperty("idleTimeBetweenReadsInMillis", "1000")));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
