@@ -1,13 +1,14 @@
 package com.cagricelebi.aws.kinesis.three;
 
-import com.amazonaws.services.kinesis.clientlibrary.exceptions.ShutdownException;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessor;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessorFactory;
 import com.amazonaws.services.kinesis.clientlibrary.types.InitializationInput;
 import com.amazonaws.services.kinesis.clientlibrary.types.ProcessRecordsInput;
 import com.amazonaws.services.kinesis.clientlibrary.types.ShutdownInput;
 import com.amazonaws.services.kinesis.model.Record;
+import com.cagricelebi.aws.kinesis.three.metric.PrometheusHelper;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,12 @@ public class SampleRecordProcessor implements IRecordProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(SampleRecordProcessor.class);
     private String shardId;
+    private PrometheusHelper prometheus;
 
     @Override
     public void initialize(InitializationInput initializationInput) {
         this.shardId = initializationInput.getShardId();
+        this.prometheus = new PrometheusHelper(shardId);
     }
 
     @Override
@@ -35,9 +38,9 @@ public class SampleRecordProcessor implements IRecordProcessor {
 
             for (Record record : records) {
                 byte[] bytea = record.getData().array();
-                String recordString = new String(bytea, StandardCharsets.UTF_8).replace("\n", "").replace("\r", "");
-                // We are not doing anything with the fetched records.
+                // String recordString = new String(bytea, StandardCharsets.UTF_8).replace("\n", "").replace("\r", "");
                 // logger.debug(recordString);
+                prometheus(bytea, record.getApproximateArrivalTimestamp());
             }
 
             long scripttimerEmitComplete = System.currentTimeMillis() - start;
@@ -50,6 +53,18 @@ public class SampleRecordProcessor implements IRecordProcessor {
                     scripttimerEmitComplete, records.size(), shardId, scripttimer);
 
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    private void prometheus(byte[] bytea, Date approxTime) {
+        try {
+            prometheus.calculateSize(bytea.length);
+            if (approxTime != null) {
+                prometheus.calculateApproxArrivalTimeDiff(approxTime.getTime());
+            }
+        } catch (Exception e) {
+            // logger.error("Error during metric calculation of record: '{}'.", new String(bytea, StandardCharsets.UTF_8).replace("\n", "").replace("\r", ""));
             logger.error(e.getMessage(), e);
         }
     }
