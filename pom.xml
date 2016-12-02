@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>amazon-kinesis-client</artifactId>
-            <version>1.7.1</version>
+            <version>1.7.2</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -48,11 +48,6 @@
         
         <dependency>
             <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient</artifactId>
-            <version>0.0.17</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_hotspot</artifactId>
             <version>0.0.17</version>
         </dependency>
@@ -66,7 +61,6 @@
             <artifactId>jetty-servlet</artifactId>
             <version>9.3.13.v20161014</version>
         </dependency>
-        
         
         <dependency>
             <groupId>junit</groupId>
