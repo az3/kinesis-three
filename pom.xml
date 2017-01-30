@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>amazon-kinesis-client</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -33,28 +33,28 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.22</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.22</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.7</version>
+            <version>1.1.9</version>
         </dependency>
         
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_hotspot</artifactId>
-            <version>0.0.17</version>
+            <version>0.0.19</version>
         </dependency>
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_servlet</artifactId>
-            <version>0.0.17</version>
+            <version>0.0.19</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
