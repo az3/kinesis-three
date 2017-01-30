@@ -21,7 +21,7 @@ public class PrometheusHelper {
             .labelNames("shard_id").register();
 
     private static final Histogram prometheusHistogram = Histogram.build()
-            .buckets(100d, 200d, 300d, 400d, 500d, 700d, 1000d, 5000d, 10000d, 50000d, 100000d)
+            .buckets(400d, 1000d, 10000d)
             .name("kinesis_consumer_records")
             .help("Tracks the data passing though a shard, shows record size in bytes.")
             .labelNames("shard_id").register();
