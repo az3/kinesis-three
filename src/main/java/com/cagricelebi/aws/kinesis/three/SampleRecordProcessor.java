@@ -38,8 +38,8 @@ public class SampleRecordProcessor implements IRecordProcessor {
 
             for (Record record : records) {
                 byte[] bytea = record.getData().array();
-                // String recordString = new String(bytea, StandardCharsets.UTF_8).replace("\n", "").replace("\r", "");
-                // logger.debug(recordString);
+                String recordString = new String(bytea, StandardCharsets.UTF_8).replace("\n", "").replace("\r", "");
+                logger.info("Record: '{}'.", recordString);
                 prometheus(bytea, record.getApproximateArrivalTimestamp());
             }
 

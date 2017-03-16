@@ -1,0 +1,49 @@
+{
+ "Version": "2012-10-17",
+ "Statement": [
+   {
+     "Effect": "Allow",
+     "Action": [
+       "kinesis:ListStreams",
+       "dynamodb:ListTables"
+     ],
+     "Resource": [
+       "*"
+     ]
+   },
+   {
+     "Effect": "Allow",
+     "Action": [
+       "kinesis:Describe*",
+       "kinesis:Get*"
+     ],
+     "Resource": [
+       "*"
+     ]
+   },
+   {
+     "Effect": "Allow",
+     "Action": [
+       "dynamodb:CreateTable",
+       "dynamodb:UpdateTable",
+       "dynamodb:Describe*",
+       "dynamodb:Scan",
+       "dynamodb:Query",
+       "dynamodb:Batch*",
+       "dynamodb:*Item"
+     ],
+     "Resource": [
+       "*"
+     ]
+   },
+   {
+     "Effect": "Allow",
+     "Action": [
+       "cloudwatch:PutMetricData"
+     ],
+     "Resource": [
+       "*"
+     ]
+   }
+ ]
+}

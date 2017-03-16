@@ -1,8 +1,6 @@
 package com.cagricelebi.aws.kinesis.three;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.KinesisClientLibConfiguration;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.Worker;
 import com.amazonaws.services.kinesis.leases.impl.LeaseCoordinator;
@@ -90,24 +88,9 @@ public class Starter {
         String appName = properties.getProperty("appName");
         String kinesisInputStream = properties.getProperty("kinesisInputStream");
         String workerId = properties.getProperty("workerId"); // Previously "workerID" with capital 'D'.
-        String accessKey = properties.getProperty("accessKey");
-        String secretKey = properties.getProperty("secretKey");
 
-        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
-        AWSCredentialsProvider credentialsProvider = new AWSCredentialsProvider() {
-            @Override
-            public AWSCredentials getCredentials() {
-                return basicAWSCredentials;
-            }
-
-            @Override
-            public void refresh() {
-            }
-        };
-
-        KinesisClientLibConfiguration config = new KinesisClientLibConfiguration(appName, kinesisInputStream, credentialsProvider, workerId);
+        KinesisClientLibConfiguration config = new KinesisClientLibConfiguration(appName, kinesisInputStream, new DefaultAWSCredentialsProviderChain(), workerId);
         try {
-            config.withRegionName(properties.getProperty("regionName"));
             config.withKinesisEndpoint(properties.getProperty("kinesisEndpoint"));
             config.withIdleTimeBetweenReadsInMillis(Long.parseLong(properties.getProperty("idleTimeBetweenReadsInMillis", "1000")));
 
